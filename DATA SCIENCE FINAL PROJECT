@@ -1,0 +1,104 @@
+import yfinance as yf
+tesla_data = yf.download('TSLA', start='2023-01-01', end='2024-01-01')
+tesla_data.reset_index(inplace=True)
+print(tesla_data.head())
+
+2nd one
+
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+
+url = ' https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-PY0220EN-SkillsNetwork/labs/project/stock.html.'
+
+response = requests.get(url)
+soup = BeautifulSoup(response.text, 'html.parser')
+
+try:
+    revenue_table = soup.find_all('table', class_='historical_data_table')[0]
+    headers = revenue_table.find_all('th')
+    column_names = [header.text.strip() for header in headers]
+
+    rows = revenue_table.find_all('tr')[1:]
+    data = []
+
+    for row in rows:
+        row_data = []
+        for td in row.find_all('td'):
+            row_data.append(td.text.strip())
+        data.append(row_data)
+
+    tesla_revenue = pd.DataFrame(data, columns=column_names)
+    print(tesla_revenue.tail())
+except IndexError:
+    print("No revenue table found on the webpage.")
+
+3rd one
+
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+
+url = ' https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-PY0220EN-SkillsNetwork/labs/project/stock.html.'
+
+response = requests.get(url)
+soup = BeautifulSoup(response.text, 'html.parser')
+
+try:
+    revenue_table = soup.find_all('table', class_='historical_data_table')[0]
+    headers = revenue_table.find_all('th')
+    column_names = [header.text.strip() for header in headers]
+
+    rows = revenue_table.find_all('tr')[1:]
+    data = []
+
+    for row in rows:
+        row_data = []
+        for td in row.find_all('td'):
+            row_data.append(td.text.strip())
+        data.append(row_data)
+
+    gme_revenue = pd.DataFrame(data, columns=column_names)
+    print(gme_revenue.tail())
+except IndexError:
+    print("No revenue table found on the webpage.")
+
+4th one
+
+import yfinance as yf
+import matplotlib.pyplot as plt
+tesla_data = yf.download('TSLA', start='2023-01-01', end='2024-01-01')
+tesla_data.reset_index(inplace=True)
+plt.plot(tesla_data['Date'], tesla_data['Close'])
+plt.title('Tesla Stock Data')
+plt.xlabel('Date')
+plt.ylabel('Closing Price (USD)')
+plt.xticks(rotation=45)
+plt.show()
+
+5th one
+
+import yfinance as yf
+import matplotlib.pyplot as plt
+
+# Download GameStop stock data
+gme_data = yf.download('GME', start='2023-01-01', end='2024-01-01')
+
+# Reset the index
+gme_data.reset_index(inplace=True)
+
+# Plot GameStop stock data
+plt.plot(gme_data['Date'], gme_data['Close'])
+plt.title('GameStop Stock Data')
+plt.xlabel('Date')
+plt.ylabel('Closing Price (USD)')
+plt.xticks(rotation=45)
+plt.show()
+
+6th
+
+import yfinance as yf
+
+gme_data = yf.download('GME', start='2023-01-01', end='2024-01-01')
+gme_data.reset_index(inplace=True)
+print(gme_data.head())
